@@ -1,3 +1,4 @@
 import { reducer as featureDataReducer, actions as featureDataActions } from './featureSlice';
+import featureSagas from './featureSagas';
 
-export { featureDataReducer, featureDataActions };
+export { featureDataReducer, featureDataActions, featureSagas };

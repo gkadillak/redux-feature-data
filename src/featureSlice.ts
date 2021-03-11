@@ -10,8 +10,16 @@ interface FeaturePayload {
     name: string;
 }
 
+interface FetchFeatureSuccessPayload extends FeaturePayload {
+    data: any[];
+}
+
+interface FetchFeatureErrorPayload extends FeaturePayload {
+    error: any;
+}
+
 interface FeatureSlice {
-    [key: string]: { status: ResourceStatus }
+    [key: string]: { status: ResourceStatus, data?: any[], error?: any }
 }
 
 const initialState: FeatureSlice = {};
@@ -29,11 +37,13 @@ export const { reducer, actions } = createSlice({
             }
             state[action.payload.name] = featureSlice;
         },
-        onFetchDataSuccess(state, action: PayloadAction<FeaturePayload>) {
+        onFetchDataSuccess(state, action: PayloadAction<FetchFeatureSuccessPayload>) {
             state[action.payload.name].status = ResourceStatus.HAS_FETCHED_SUCCESS;
+            state[action.payload.name].data = action.payload.data;
         },
-        onFetchDataError(state, action: PayloadAction<FeaturePayload>) {
+        onFetchDataError(state, action: PayloadAction<FetchFeatureErrorPayload>) {
             state[action.payload.name].status = ResourceStatus.HAS_FETCHED_ERROR;
+            state[action.payload.name].error = action.payload.error;
         }
     }
 })
