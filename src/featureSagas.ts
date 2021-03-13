@@ -1,26 +1,47 @@
+import { Action } from 'redux';
 import { put, takeLatest } from 'redux-saga/effects';
-import { actions } from './featureSlice';
+import { normalize } from 'normalizr';
+import { actions, FeatureErrorPayload, FeatureSuccessPayload, SCHEMA_MAP } from './featureSlice';
 
-const { onFetchData, onFetchDataSuccess, onFetchDataError } = actions;
 
-interface ActionPayload {
+const { onFetchData, onFetchDataSuccess, onFetchDataError, onCreateEntitySuccess, onCreateEntityError } = actions;
+
+interface FetchPayload {
     type: string;
     payload: {
-        name: string
-        callback<T>(): Promise<T>
+        name: string;
+        callback<T>(): Promise<T>;
+        entity: string;
+        format(data: any): any[]
     }
 }
 
-function* handleFetchData(action: ActionPayload) {
-    const { callback, name } = action.payload;
+interface GenericSagaHandler {
+    action: FetchPayload;
+    onSuccessAction: (params: FeatureSuccessPayload) => Action<any>;
+    onErrorAction: (params: FeatureErrorPayload) => Action<any>
+}
+
+function* genericSagaHandler({ action, onSuccessAction, onErrorAction }: GenericSagaHandler) {
+    const { callback, name, entity, format } = action.payload;
     try {
         const { data } = yield callback();
-        yield put(onFetchDataSuccess({ name, data }));
+        const formattedData = format ? format(data) : data;
+        const { result, entities } = normalize(formattedData, { [entity]: [SCHEMA_MAP[entity]] });
+        yield put(onSuccessAction({ name, data: result, entities }));
     } catch (error) {
-        yield put(onFetchDataError({ name, error }));
+        yield put(onErrorAction({ name, error }));
     }
 }
 
-export default function* featureSagas() {
-    yield takeLatest(onFetchData.toString(), handleFetchData);
+export function* handleFetchSaga(action: FetchPayload) {
+    yield genericSagaHandler({ action, onSuccessAction: onFetchDataSuccess, onErrorAction: onFetchDataError });
+}
+
+export function* handleCreateSaga(action: FetchPayload) {
+    yield genericSagaHandler({ action, onSuccessAction: onCreateEntitySuccess, onErrorAction: onCreateEntityError })
+}
+
+export default function* featureSagasRoot() {
+    yield takeLatest(onFetchData.toString(), handleFetchSaga);
 }
