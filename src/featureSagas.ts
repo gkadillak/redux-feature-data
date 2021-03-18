@@ -27,7 +27,8 @@ function* genericSagaHandler({ action, onSuccessAction, onErrorAction }: Generic
     try {
         const { data } = yield callback();
         const formattedData = format ? format(data) : data;
-        const { result, entities } = normalize(formattedData, { [entity]: [SCHEMA_MAP[entity]] });
+        const entityToUse = SCHEMA_MAP[entity];
+        const { result, entities } = normalize(formattedData, { [entity]: [entityToUse] });
         yield put(onSuccessAction({ name, data: result, entities }));
     } catch (error) {
         yield put(onErrorAction({ name, error }));

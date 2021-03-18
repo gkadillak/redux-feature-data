@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { schema } from 'normalizr';
 import deepmerge from 'deepmerge';
 
 
@@ -95,10 +94,7 @@ export const { reducer, actions } = createSlice({
 });
 
 
-export function createReducer(schemaMap: { [key: string]: any[] }) {
-    SCHEMA_MAP = Object.keys(schemaMap).reduce((acc: { [key: string]: any }, curr: string) => {
-        acc[curr] = new (Function.prototype.bind.apply(schema.Entity, [null, ...schemaMap[curr]]));
-        return acc;
-    }, {});;
+export function createReducer(schemaMap: any) {
+    SCHEMA_MAP = schemaMap;
     return reducer;
 }

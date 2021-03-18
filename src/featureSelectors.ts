@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { denormalize } from 'normalizr';
+import { denormalize, schema } from 'normalizr';
 import { FeatureSlices, FeatureSlice, SCHEMA_MAP, ResourceStatus, Entities } from './featureSlice';
 
 interface GenericState {
@@ -46,8 +46,8 @@ export const makeGetHasEntityCreatedError = (name: string) => {
 
 export const makeGetDenormalizedData = (name: string, entity: string) => {
     const getHasFeatureFetchedSuccess = makeGetHasFeatureFetchedSuccess(name);
+    const entityToUse = SCHEMA_MAP[entity];
     return createSelector(getFeatureSlices, getHasFeatureFetchedSuccess, (slices, hasFetchedSuccessfully) => {
-
         if (!hasFetchedSuccessfully || !slices.entities) {
             return {};
         }
@@ -56,7 +56,7 @@ export const makeGetDenormalizedData = (name: string, entity: string) => {
         const entitiesSlice = slices.entities as Entities;
         return denormalize(
             data,
-            { [entity]: [SCHEMA_MAP[entity]] },
+            { [entity]: [entityToUse] },
             { [entity]: entitiesSlice[entity] },
         );
     });
