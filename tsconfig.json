@@ -5,8 +5,6 @@
         "strict": true,
         "declaration": true,
         "outDir": "./dist",
-        "sourceMap": true,
-        "esModuleInterop": true
     },
     "exclude": [
         "tests",

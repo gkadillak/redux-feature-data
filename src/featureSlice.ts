@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import deepmerge from 'deepmerge';
+import { merge as deepmerge } from 'merge-anything';
 
 
 export let SCHEMA_MAP: { [key: string]: any } = {};
@@ -84,7 +84,7 @@ export const { reducer, actions } = createSlice({
         onCreateEntitySuccess(state, action: PayloadAction<FeatureSuccessPayload>) {
             state.entities = deepmerge(state?.entities || {}, action.payload.entities);;
             state[action.payload.name].status = ResourceStatus.HAS_CREATED_SUCCESS;
-            state[action.payload.name].data = action.payload.data;
+            state[action.payload.name].data = deepmerge(state[action.payload.name].data || {}, action.payload.data);
         },
         onCreateEntityError(state, action: PayloadAction<FeatureErrorPayload>) {
             state[action.payload.name].status = ResourceStatus.HAS_CREATED_ERROR;
