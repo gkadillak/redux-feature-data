@@ -1,6 +1,6 @@
 {
   "name": "redux-feature-data",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "format": "prettier --write .",
     "build": "tsc",
     "start": "yarn build --watch",
-    "commit": "cz"
+    "commit": "cz",
+    "publish": "yarn build && npm publish"
   },
   "author": "Garrett Kadillak",
   "license": "ISC",
