@@ -30,7 +30,7 @@ describe("featureSagas", () => {
           entity: "users",
         },
       };
-      const onSuccessAction = (payload) => ({ type: "success", payload });
+      const onSuccessAction = (payload: any) => ({ type: "success", payload });
       const onErrorAction = () => {};
       const action = { action: successAction, onSuccessAction, onErrorAction };
       // @ts-expect-error
@@ -60,17 +60,19 @@ describe("featureSagas", () => {
               users: [{ name: "Garrett" }, { name: "Laura" }],
             },
           }),
-          format(data) {
-            const formattedUsers = data.users.map((item, index) => ({
-              id: index + 1,
-              ...item,
-            }));
+          format(data: any) {
+            const formattedUsers = data.users.map(
+              (item: any, index: number) => ({
+                id: index + 1,
+                ...item,
+              })
+            );
             return { users: formattedUsers };
           },
           entity: "users",
         },
       };
-      const onSuccessAction = (payload) => ({ type: "success", payload });
+      const onSuccessAction = (payload: any) => ({ type: "success", payload });
       const onErrorAction = () => {};
       const action = { action: successAction, onSuccessAction, onErrorAction };
       // @ts-expect-error
@@ -105,13 +107,13 @@ describe("featureSagas", () => {
               meta: metaData,
             },
           }),
-          meta(data) {
+          meta(data: any) {
             return data.meta;
           },
           entity: "users",
         },
       };
-      const onSuccessAction = (payload) => ({ type: "success", payload });
+      const onSuccessAction = (payload: any) => ({ type: "success", payload });
       const onErrorAction = () => {};
       const action = { action: successAction, onSuccessAction, onErrorAction };
       // @ts-expect-error
