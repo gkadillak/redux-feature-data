@@ -1,17 +1,11 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-        "strict": true,
-        "declaration": true,
-        "outDir": "./dist",
-    },
-    "exclude": [
-        "tests",
-        "dist",
-        "node_modules"
-    ],
-    "include": [
-        "src/**/*",
-    ]
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "declaration": true,
+    "outDir": "./dist"
+  },
+  "exclude": ["tests", "dist", "node_modules", "*.test.ts"],
+  "include": ["src/**/*"]
 }
