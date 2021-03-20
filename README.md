@@ -2,8 +2,6 @@
 
 Redux Feature Data is a generic set of actions, sagas and selectors to reduce the boilerplate required for interacting with API's in a react project that uses redux-sagas as their middleware.
 
-**Note**: Right now this project is not well suited for GraphQL-like endpoints. There is no deep merging for store data.
-
 ## Getting Started
 
 ### Add the redux feature data reducer to your reducers:
@@ -59,4 +57,57 @@ export default configureStore({
 });
 
 sagaMiddleware.run(featureSagasRoot);
+```
+
+### Now you're free to use the actions and selectors in your components
+
+```js
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { featureDataActions, featureSelectors } from "redux-feature-data";
+
+const {
+  makeGetDenormalizedData,
+  makeGetHasFeatureFetchedSuccess,
+} = featureSelectors;
+
+export function Counter() {
+  const dispatch = useDispatch();
+  const getDenormalizedData = makeGetDenormalizedData("counter", "users");
+  const getHasFeatureFetchedSuccess = makeGetHasFeatureFetchedSuccess(
+    "counter"
+  );
+  const hasUsersFetched = useSelector(getHasFeatureFetchedSuccess);
+  const data = useSelector(getDenormalizedData);
+
+  useEffect(() => {
+    console.log(data);
+  }, [hasUsersFetched]);
+
+  return (
+    <div>
+      {hasUsersFetched && (
+        <ul>
+          {data.users?.map((user) => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+      )}
+      <button
+        onClick={() => {
+          dispatch(
+            featureDataActions.onFetchData({
+              name: "counter",
+              entity: "users",
+              callback: () => axios.get("https://api.mocki.io/v1/f8750ac9"),
+            })
+          );
+        }}
+      >
+        Add Async
+      </button>
+    </div>
+  );
+}
 ```
