@@ -26,6 +26,10 @@ export type Entities = {
   };
 };
 
+interface MetaDataPayload extends FeaturePayload {
+  metaData: any;
+}
+
 export interface FeatureSuccessPayload extends FeaturePayload {
   data: Result;
   entities: Entities | {};
@@ -39,6 +43,7 @@ export interface FeatureSlice {
   status: ResourceStatus;
   data?: Result;
   error?: any;
+  meta?: any;
 }
 
 export interface FeatureSlices<T> {
@@ -53,6 +58,13 @@ export const { reducer, actions } = createSlice({
   name: "featureData",
   initialState: initialState,
   reducers: {
+    onUpdateMetaData(state, action: PayloadAction<MetaDataPayload>) {
+      let featureSlice = state[action.payload.name];
+      featureSlice.meta = deepmerge(
+        featureSlice?.meta || {},
+        action.payload.metaData
+      );
+    },
     onFetchData(state, action: PayloadAction<FeaturePayload>) {
       let featureSlice = state[action.payload.name];
       if (!featureSlice) {

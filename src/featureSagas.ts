@@ -14,6 +14,7 @@ const {
   onFetchDataError,
   onCreateEntitySuccess,
   onCreateEntityError,
+  onUpdateMetaData,
 } = actions;
 
 interface FetchPayload {
@@ -23,6 +24,7 @@ interface FetchPayload {
     callback<T>(): Promise<T>;
     entity: string;
     format?(data: any): any[];
+    meta?(data: any): any;
   };
 }
 
@@ -37,15 +39,19 @@ export function* genericSagaHandler({
   onSuccessAction,
   onErrorAction,
 }: GenericSagaHandler) {
-  const { callback, name, entity, format } = action.payload;
+  const { callback, name, entity, format, meta } = action.payload;
   try {
     const { data } = yield callback();
     const formattedData = format ? format(data) : data;
+    const metaData = meta ? meta(data) : {};
     const entityToUse = SCHEMA_MAP[entity];
     const { result, entities } = normalize(formattedData, {
       [entity]: [entityToUse],
     });
     yield put(onSuccessAction({ name, data: result, entities }));
+    if (metaData) {
+      yield put(onUpdateMetaData({ name, metaData }));
+    }
   } catch (error) {
     yield put(onErrorAction({ name, error }));
   }

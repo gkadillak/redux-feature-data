@@ -72,3 +72,9 @@ export const makeGetDenormalizedData = (name: string, entity: string) => {
     }
   );
 };
+
+export const makeGetMetaData = (name: string) => {
+  return createSelector(getFeatureSlices, (slices) => {
+    return slices[name].meta;
+  });
+};
