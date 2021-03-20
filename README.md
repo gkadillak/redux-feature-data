@@ -1,3 +1,5 @@
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 # Redux Feature Data
 
 Redux Feature Data is a generic set of actions, sagas and selectors to reduce the boilerplate required for interacting with API's in a react project that uses redux-sagas as their middleware.
