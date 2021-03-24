@@ -7,7 +7,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "format": "prettier --write .",
-    "build": "tsc",
+    "build": "rollup --config rollup.config.js",
     "start": "yarn build --watch",
     "commit": "cz",
     "publish": "yarn build && npm publish"
@@ -26,12 +26,14 @@
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-typescript": "^7.13.0",
+    "@rollup/plugin-typescript": "^8.2.0",
     "babel-jest": "^26.6.3",
     "commitizen": "^4.2.3",
     "cz-conventional-changelog": "3.3.0",
     "jest": "^26.6.3",
     "prettier": "2.2.1",
     "redux-saga-test-plan": "^4.0.1",
+    "rollup": "^2.42.4",
     "typescript": "^4.2.3"
   },
   "config": {
