@@ -1,6 +1,6 @@
 {
   "name": "redux-feature-data",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,8 +9,7 @@
     "format": "prettier --write .",
     "build": "rollup --config rollup.config.js",
     "start": "yarn build --watch",
-    "commit": "cz",
-    "publish": "yarn build && npm publish"
+    "commit": "cz"
   },
   "author": "Garrett Kadillak",
   "license": "ISC",
