@@ -7,6 +7,7 @@ import {
   FeatureSuccessPayload,
   SCHEMA_MAP,
 } from "./featureSlice";
+import type { GenericPayload } from "./featureSlice";
 
 const {
   onFetchData,
@@ -19,13 +20,7 @@ const {
 
 interface FetchPayload {
   type: string;
-  payload: {
-    name: string;
-    callback<T>(): Promise<T>;
-    entity: string;
-    format?(data: any): any[];
-    meta?(data: any): any;
-  };
+  payload: GenericPayload;
 }
 
 interface GenericSagaHandler {

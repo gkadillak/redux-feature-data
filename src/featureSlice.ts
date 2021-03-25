@@ -12,10 +12,19 @@ export enum ResourceStatus {
   HAS_CREATED_ERROR = "HAS_CREATED_ERROR",
 }
 
+export interface GenericPayload {
+  name: string;
+  callback<T>(): Promise<T>;
+  entity: string;
+  format?(data: any): { [key: string]: any[] };
+  meta?(data: any): any;
+}
+
 interface FeaturePayload {
   name: string;
 }
 
+interface FeatureActionPayload extends GenericPayload, FeaturePayload {}
 type Result = {
   [key: string]: Number[];
 };
@@ -65,7 +74,7 @@ export const { reducer, actions } = createSlice({
         action.payload.metaData
       );
     },
-    onFetchData(state, action: PayloadAction<FeaturePayload>) {
+    onFetchData(state, action: PayloadAction<FeatureActionPayload>) {
       let featureSlice = state[action.payload.name];
       if (!featureSlice) {
         featureSlice = { status: ResourceStatus.IS_FETCHING };
@@ -86,7 +95,7 @@ export const { reducer, actions } = createSlice({
       state[action.payload.name].status = ResourceStatus.HAS_FETCHED_ERROR;
       state[action.payload.name].error = action.payload.error.toString();
     },
-    onCreateEntity(state, action: PayloadAction<FeaturePayload>) {
+    onCreateEntity(state, action: PayloadAction<FeatureActionPayload>) {
       let featureSlice = state[action.payload.name];
       if (!featureSlice) {
         featureSlice = { status: ResourceStatus.IS_CREATING };
