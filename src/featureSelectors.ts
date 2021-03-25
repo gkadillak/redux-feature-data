@@ -53,7 +53,6 @@ export const makeGetHasEntityCreatedError = (name: string) => {
 
 export const makeGetDenormalizedData = (name: string, entity: string) => {
   const getHasFeatureFetchedSuccess = makeGetHasFeatureFetchedSuccess(name);
-  const entityToUse = SCHEMA_MAP[entity];
   return createSelector(
     getFeatureSlices,
     getHasFeatureFetchedSuccess,
@@ -64,6 +63,7 @@ export const makeGetDenormalizedData = (name: string, entity: string) => {
 
       const { data } = slices[name];
       const entitiesSlice = slices.entities as Entities;
+      const entityToUse = SCHEMA_MAP[entity];
       return denormalize(
         data,
         { [entity]: [entityToUse] },
