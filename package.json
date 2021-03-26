@@ -1,6 +1,6 @@
 {
   "name": "redux-feature-data",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "Generic actions, selectors and sagas for react projects using redux, redux-sagas, and normalizr",
   "issues": "https://github.com/gkadillak/redux-feature-data/issues",
   "main": "dist/index.js",
@@ -8,7 +8,12 @@
   "files": [
     "/dist"
   ],
-  "keywords": ["react", "redux", "redux-sagas", "normalizr"],
+  "keywords": [
+    "react",
+    "redux",
+    "redux-sagas",
+    "normalizr"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/gkadillak/redux-feature-data.git"
