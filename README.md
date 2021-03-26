@@ -12,9 +12,11 @@ If you're using reduxjs toolkit, it should look something like this:
 
 ```js
 import { createFeatureDataReducer } from "redux-feature-data";
+import { schema } from "normalizr";
 
-// The value of the object here are the arguments that are passed to normalizr.
-// In this case, the key of the entity will be 'users'.
+// need to pass the normalizr entities so that redux-feature-data
+// understands the relationship between entities
+const users = new schema.Entity("users");
 const featureDataReducer = createFeatureDataReducer({ users: ["users"] });
 
 export default configureStore({
@@ -29,8 +31,11 @@ If you aren't using reduxjs toolkit, it should look something like this:
 
 ```js
 import { combineReducers } from "redux";
+import { schema } from "normalizr";
 
-const featureDataReducer = createFeatureDataReducer({ users: ["users"] });
+const users = new schema.Entity("users");
+
+const featureDataReducer = createFeatureDataReducer({ users });
 
 export default combineReducers({
   // other reducers here
@@ -46,9 +51,11 @@ If you're using reduxjs toolkit, it should look something like this:
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { createFeatureDataReducer, featureSagasRoot } from "redux-feature-data";
+import { schema } from "normalizr";
 
+const users = new schema.Entity("users");
 const sagaMiddleware = createSagaMiddleware();
-const featureDataReducer = createFeatureDataReducer({ users: ["users"] });
+const featureDataReducer = createFeatureDataReducer({ users });
 
 export default configureStore({
   reducer: {
@@ -76,10 +83,13 @@ const {
 
 export function Counter() {
   const dispatch = useDispatch();
-  const getDenormalizedData = makeGetDenormalizedData("counter", "users");
-  const getHasFeatureFetchedSuccess = makeGetHasFeatureFetchedSuccess(
-    "counter"
-  );
+  const getDenormalizedData = makeGetDenormalizedData({
+    name: "counter",
+    entity: "users",
+  });
+  const getHasFeatureFetchedSuccess = makeGetHasFeatureFetchedSuccess({
+    name: "counter",
+  });
   const hasUsersFetched = useSelector(getHasFeatureFetchedSuccess);
   const data = useSelector(getDenormalizedData);
 
@@ -113,3 +123,10 @@ export function Counter() {
   );
 }
 ```
+
+If you're curious about the pattern being used for the selector here to pass arguments, feel free to
+read the [reselect documentation](https://github.com/reduxjs/reselect#q-how-do-i-create-a-selector-that-takes-an-argument) for an in-depth answer to this question.
+
+## Demo
+
+If you'd like to see redux-feature-data in action, feel free to use [this codesandbox.io link](https://codesandbox.io/s/magical-wave-5itof) to try it out without having to write any code.
