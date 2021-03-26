@@ -3,7 +3,8 @@
   "version": "1.0.6",
   "description": "",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
+  "files": ["/dist"],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
