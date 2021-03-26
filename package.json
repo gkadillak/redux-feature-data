@@ -2,7 +2,8 @@
   "name": "redux-feature-data",
   "version": "1.0.4",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/index",
+  "typings": "dist/index",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
