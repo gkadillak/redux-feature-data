@@ -20,7 +20,10 @@ describe("featureSelectors", () => {
           status: "blah",
         },
       };
-      const getDenormalizedData = makeGetDenormalizedData("users", "users");
+      const getDenormalizedData = makeGetDenormalizedData({
+        name: "users",
+        entity: "users",
+      });
       const output = getDenormalizedData.resultFunc(featureSlices, true);
       expect(output).toEqual({
         users: [

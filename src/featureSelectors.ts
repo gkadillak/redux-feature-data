@@ -15,48 +15,61 @@ interface GenericState {
 const getFeatureSlices = (state: GenericState): FeatureSlices<FeatureSlice> =>
   state.featureData;
 
-export const makeGetFeatureStatus = (name: string) => {
-  return createSelector(getFeatureSlices, (slices) => slices[name]?.status);
-};
-
-export const makeGetHasFeatureFetchedSuccess = (name: string) => {
-  const getFeatureStatus = makeGetFeatureStatus(name);
+export const makeGetFeatureStatus = ({ name }: { name: string }) => {
   return createSelector(
-    getFeatureStatus,
-    (status) => status && status === ResourceStatus.HAS_FETCHED_SUCCESS
+    getFeatureSlices,
+    (slices: FeatureSlices<FeatureSlice>) => slices[name]?.status
   );
 };
 
-export const makeGetHasFeatureFetchedError = (name: string) => {
-  const getFeatureStatus = makeGetFeatureStatus(name);
+export const makeGetHasFeatureFetchedSuccess = ({ name }: { name: string }) => {
+  const getFeatureStatus = makeGetFeatureStatus({ name });
   return createSelector(
     getFeatureStatus,
-    (status) => status && status === ResourceStatus.HAS_FETCHED_ERROR
+    (status: ResourceStatus) =>
+      status && status === ResourceStatus.HAS_FETCHED_SUCCESS
   );
 };
 
-export const makeGetHasEntityCreatedSuccess = (name: string) => {
-  const getFeatureStatus = makeGetFeatureStatus(name);
+export const makeGetHasFeatureFetchedError = ({ name }: { name: string }) => {
+  const getFeatureStatus = makeGetFeatureStatus({ name });
   return createSelector(
     getFeatureStatus,
-    (status) => status && status === ResourceStatus.HAS_CREATED_SUCCESS
+    (status: ResourceStatus) =>
+      status && status === ResourceStatus.HAS_FETCHED_ERROR
   );
 };
 
-export const makeGetHasEntityCreatedError = (name: string) => {
-  const getFeatureStatus = makeGetFeatureStatus(name);
+export const makeGetHasEntityCreatedSuccess = ({ name }: { name: string }) => {
+  const getFeatureStatus = makeGetFeatureStatus({ name });
   return createSelector(
     getFeatureStatus,
-    (status) => status && status === ResourceStatus.HAS_CREATED_ERROR
+    (status: ResourceStatus) =>
+      status && status === ResourceStatus.HAS_CREATED_SUCCESS
   );
 };
 
-export const makeGetDenormalizedData = (name: string, entity: string) => {
-  const getHasFeatureFetchedSuccess = makeGetHasFeatureFetchedSuccess(name);
+export const makeGetHasEntityCreatedError = ({ name }: { name: string }) => {
+  const getFeatureStatus = makeGetFeatureStatus({ name });
+  return createSelector(
+    getFeatureStatus,
+    (status: ResourceStatus) =>
+      status && status === ResourceStatus.HAS_CREATED_ERROR
+  );
+};
+
+export const makeGetDenormalizedData = ({
+  name,
+  entity,
+}: {
+  name: string;
+  entity: string;
+}) => {
+  const getHasFeatureFetchedSuccess = makeGetHasFeatureFetchedSuccess({ name });
   return createSelector(
     getFeatureSlices,
     getHasFeatureFetchedSuccess,
-    (slices, hasFetchedSuccessfully) => {
+    (slices: FeatureSlices<FeatureSlice>, hasFetchedSuccessfully: boolean) => {
       if (!hasFetchedSuccessfully || !slices.entities) {
         return {};
       }
@@ -73,8 +86,11 @@ export const makeGetDenormalizedData = (name: string, entity: string) => {
   );
 };
 
-export const makeGetMetaData = (name: string) => {
-  return createSelector(getFeatureSlices, (slices) => {
-    return slices[name].meta;
-  });
+export const makeGetMetaData = ({ name }: { name: string }) => {
+  return createSelector(
+    getFeatureSlices,
+    (slices: FeatureSlices<FeatureSlice>) => {
+      return slices[name].meta;
+    }
+  );
 };
