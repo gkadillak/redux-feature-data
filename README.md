@@ -17,7 +17,7 @@ import { schema } from "normalizr";
 // need to pass the normalizr entities so that redux-feature-data
 // understands the relationship between entities
 const users = new schema.Entity("users");
-const featureDataReducer = createFeatureDataReducer({ users: ["users"] });
+const featureDataReducer = createFeatureDataReducer({ users });
 
 export default configureStore({
   reducer: {
