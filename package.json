@@ -20,7 +20,7 @@
     "build": "rollup --config rollup.config.js",
     "start": "yarn build --watch",
     "commit": "cz",
-    "release": "build && standard-version"
+    "release": "yarn build && yarn standard-version"
   },
   "author": "Garrett Kadillak",
   "license": "ISC",
