@@ -130,3 +130,7 @@ read the [reselect documentation](https://github.com/reduxjs/reselect#q-how-do-i
 ## Demo
 
 If you'd like to see redux-feature-data in action, feel free to use [this codesandbox.io link](https://codesandbox.io/s/magical-wave-5itof) to try it out without having to write any code.
+
+## API
+
+[Link to api docs](https://gkadillak.github.io/redux-feature-data/)
