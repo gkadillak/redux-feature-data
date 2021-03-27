@@ -29,6 +29,9 @@ interface GenericSagaHandler {
   onErrorAction: (params: FeatureErrorPayload) => Action<any>;
 }
 
+/**
+ * @ignore
+ */
 export function* genericSagaHandler({
   action,
   onSuccessAction,

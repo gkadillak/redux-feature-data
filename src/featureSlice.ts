@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { merge as deepmerge } from "merge-anything";
+import { schema } from "normalizr";
 
-export let SCHEMA_MAP: { [key: string]: any } = {};
+/** @internal */
+export let SCHEMA_MAP: { [key: string]: schema.Entity } = {};
 
 export enum ResourceStatus {
   IS_FETCHING = "IS_FETCHING",
@@ -20,11 +22,11 @@ export interface GenericPayload {
   meta?(data: any): any;
 }
 
-interface FeaturePayload {
+export interface FeaturePayload {
   name: string;
 }
 
-interface FeatureActionPayload extends GenericPayload, FeaturePayload {}
+export interface FeatureActionPayload extends GenericPayload, FeaturePayload {}
 type Result = {
   [key: string]: Number[];
 };
@@ -122,7 +124,7 @@ export const { reducer, actions } = createSlice({
   },
 });
 
-export function createReducer(schemaMap: any) {
+export function createReducer(schemaMap: { [key: string]: schema.Entity }) {
   SCHEMA_MAP = schemaMap;
   return reducer;
 }

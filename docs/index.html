@@ -1,0 +1,230 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>redux-feature-data</title>
+	<meta name="description" content="Documentation for redux-feature-data">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">redux-feature-data</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>redux-feature-data</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen friendly"></a></p>
+				<a href="#redux-feature-data" id="redux-feature-data" style="color: inherit; text-decoration: none;">
+					<h1>Redux Feature Data</h1>
+				</a>
+				<p>Redux Feature Data is a generic set of actions, sagas and selectors to reduce the boilerplate required for interacting with API&#39;s in a react project that uses redux-sagas as their middleware.</p>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h2>Getting Started</h2>
+				</a>
+				<a href="#add-the-redux-feature-data-reducer-to-your-reducers" id="add-the-redux-feature-data-reducer-to-your-reducers" style="color: inherit; text-decoration: none;">
+					<h3>Add the redux feature data reducer to your reducers:</h3>
+				</a>
+				<p>If you&#39;re using reduxjs toolkit, it should look something like this:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">createFeatureDataReducer</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;redux-feature-data&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">schema</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;normalizr&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// need to pass the normalizr entities so that redux-feature-data</span>
+<span style="color: #008000">// understands the relationship between entities</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">users</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">schema</span><span style="color: #000000">.</span><span style="color: #795E26">Entity</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;users&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">featureDataReducer</span><span style="color: #000000"> = </span><span style="color: #795E26">createFeatureDataReducer</span><span style="color: #000000">({ </span><span style="color: #001080">users</span><span style="color: #000000"> });</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> </span><span style="color: #795E26">configureStore</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">reducer:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// other reducers here</span>
+<span style="color: #000000">    </span><span style="color: #001080">featureData:</span><span style="color: #000000"> </span><span style="color: #001080">featureDataReducer</span><span style="color: #000000">, </span><span style="color: #008000">// The name of this slice can be whatever you want</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>If you aren&#39;t using reduxjs toolkit, it should look something like this:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">combineReducers</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;redux&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">schema</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;normalizr&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">users</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">schema</span><span style="color: #000000">.</span><span style="color: #795E26">Entity</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;users&quot;</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">featureDataReducer</span><span style="color: #000000"> = </span><span style="color: #795E26">createFeatureDataReducer</span><span style="color: #000000">({ </span><span style="color: #001080">users</span><span style="color: #000000"> });</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> </span><span style="color: #795E26">combineReducers</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #008000">// other reducers here</span>
+<span style="color: #000000">  </span><span style="color: #001080">featureData:</span><span style="color: #000000"> </span><span style="color: #001080">featureDataReducer</span><span style="color: #000000">,</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#add-the-redux-feature-data-saga-to-your-sagas" id="add-the-redux-feature-data-saga-to-your-sagas" style="color: inherit; text-decoration: none;">
+					<h3>Add the redux feature data saga to your sagas:</h3>
+				</a>
+				<p>If you&#39;re using reduxjs toolkit, it should look something like this:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">configureStore</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@reduxjs/toolkit&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">createSagaMiddleware</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;redux-saga&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">createFeatureDataReducer</span><span style="color: #000000">, </span><span style="color: #001080">featureSagasRoot</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;redux-feature-data&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">schema</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;normalizr&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">users</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #001080">schema</span><span style="color: #000000">.</span><span style="color: #795E26">Entity</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;users&quot;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">sagaMiddleware</span><span style="color: #000000"> = </span><span style="color: #795E26">createSagaMiddleware</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">featureDataReducer</span><span style="color: #000000"> = </span><span style="color: #795E26">createFeatureDataReducer</span><span style="color: #000000">({ </span><span style="color: #001080">users</span><span style="color: #000000"> });</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #AF00DB">default</span><span style="color: #000000"> </span><span style="color: #795E26">configureStore</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">reducer:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// other reducers here</span>
+<span style="color: #000000">    </span><span style="color: #001080">featureData:</span><span style="color: #000000"> </span><span style="color: #001080">featureDataReducer</span><span style="color: #000000">,</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  </span><span style="color: #001080">middleware:</span><span style="color: #000000"> [</span><span style="color: #001080">sagaMiddleware</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #001080">sagaMiddleware</span><span style="color: #000000">.</span><span style="color: #795E26">run</span><span style="color: #000000">(</span><span style="color: #001080">featureSagasRoot</span><span style="color: #000000">);</span>
+</code></pre>
+				<a href="#now-you39re-free-to-use-the-actions-and-selectors-in-your-components" id="now-you39re-free-to-use-the-actions-and-selectors-in-your-components" style="color: inherit; text-decoration: none;">
+					<h3>Now you&#39;re free to use the actions and selectors in your components</h3>
+				</a>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">React</span><span style="color: #000000">, { </span><span style="color: #001080">useEffect</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;react&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">axios</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;axios&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">useSelector</span><span style="color: #000000">, </span><span style="color: #001080">useDispatch</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;react-redux&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">featureDataActions</span><span style="color: #000000">, </span><span style="color: #001080">featureSelectors</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;redux-feature-data&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #0070C1">makeGetDenormalizedData</span><span style="color: #000000">,</span>
+<span style="color: #000000">  </span><span style="color: #0070C1">makeGetHasFeatureFetchedSuccess</span><span style="color: #000000">,</span>
+<span style="color: #000000">} = </span><span style="color: #001080">featureSelectors</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">Counter</span><span style="color: #000000">() {</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">dispatch</span><span style="color: #000000"> = </span><span style="color: #795E26">useDispatch</span><span style="color: #000000">();</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">getDenormalizedData</span><span style="color: #000000"> = </span><span style="color: #795E26">makeGetDenormalizedData</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;counter&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">entity:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;users&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  });</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">getHasFeatureFetchedSuccess</span><span style="color: #000000"> = </span><span style="color: #795E26">makeGetHasFeatureFetchedSuccess</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">name:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;counter&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  });</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">hasUsersFetched</span><span style="color: #000000"> = </span><span style="color: #795E26">useSelector</span><span style="color: #000000">(</span><span style="color: #001080">getHasFeatureFetchedSuccess</span><span style="color: #000000">);</span>
+<span style="color: #000000">  </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">data</span><span style="color: #000000"> = </span><span style="color: #795E26">useSelector</span><span style="color: #000000">(</span><span style="color: #001080">getDenormalizedData</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">  </span><span style="color: #795E26">useEffect</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">data</span><span style="color: #000000">);</span>
+<span style="color: #000000">  }, [</span><span style="color: #001080">hasUsersFetched</span><span style="color: #000000">]);</span>
+
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> (</span>
+<span style="color: #000000">    </span><span style="color: #800000">&lt;div&gt;</span>
+<span style="color: #000000">      </span><span style="color: #0000FF">{</span><span style="color: #001080">hasUsersFetched</span><span style="color: #000000FF"> </span><span style="color: #000000">&amp;&amp;</span><span style="color: #000000FF"> (</span>
+<span style="color: #000000FF">        </span><span style="color: #800000">&lt;ul&gt;</span>
+<span style="color: #000000FF">          </span><span style="color: #0000FF">{</span><span style="color: #001080">data</span><span style="color: #000000FF">.</span><span style="color: #001080">users</span><span style="color: #000000FF">?.</span><span style="color: #795E26">map</span><span style="color: #000000FF">((</span><span style="color: #001080">user</span><span style="color: #000000FF">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000FF"> (</span>
+<span style="color: #000000FF">            </span><span style="color: #800000">&lt;li</span><span style="color: #000000FF"> </span><span style="color: #FF0000">key</span><span style="color: #000000">=</span><span style="color: #0000FF">{</span><span style="color: #001080">user</span><span style="color: #000000FF">.</span><span style="color: #001080">id</span><span style="color: #0000FF">}</span><span style="color: #800000">&gt;</span><span style="color: #0000FF">{</span><span style="color: #001080">user</span><span style="color: #000000FF">.</span><span style="color: #001080">name</span><span style="color: #0000FF">}</span><span style="color: #800000">&lt;/li&gt;</span>
+<span style="color: #000000FF">          ))</span><span style="color: #0000FF">}</span>
+<span style="color: #000000FF">        </span><span style="color: #800000">&lt;/ul&gt;</span>
+<span style="color: #000000FF">      )</span><span style="color: #0000FF">}</span>
+<span style="color: #000000">      </span><span style="color: #800000">&lt;button</span>
+<span style="color: #000000">        </span><span style="color: #FF0000">onClick</span><span style="color: #000000">=</span><span style="color: #0000FF">{</span><span style="color: #000000FF">() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000FF"> {</span>
+<span style="color: #000000FF">          </span><span style="color: #795E26">dispatch</span><span style="color: #000000FF">(</span>
+<span style="color: #000000FF">            </span><span style="color: #001080">featureDataActions</span><span style="color: #000000FF">.</span><span style="color: #795E26">onFetchData</span><span style="color: #000000FF">({</span>
+<span style="color: #000000FF">              </span><span style="color: #001080">name:</span><span style="color: #000000FF"> </span><span style="color: #A31515">&quot;counter&quot;</span><span style="color: #000000FF">,</span>
+<span style="color: #000000FF">              </span><span style="color: #001080">entity:</span><span style="color: #000000FF"> </span><span style="color: #A31515">&quot;users&quot;</span><span style="color: #000000FF">,</span>
+<span style="color: #000000FF">              </span><span style="color: #795E26">callback</span><span style="color: #001080">:</span><span style="color: #000000FF"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000FF"> </span><span style="color: #001080">axios</span><span style="color: #000000FF">.</span><span style="color: #795E26">get</span><span style="color: #000000FF">(</span><span style="color: #A31515">&quot;https://api.mocki.io/v1/f8750ac9&quot;</span><span style="color: #000000FF">),</span>
+<span style="color: #000000FF">            })</span>
+<span style="color: #000000FF">          );</span>
+<span style="color: #000000FF">        }</span><span style="color: #0000FF">}</span>
+<span style="color: #000000">      </span><span style="color: #800000">&gt;</span>
+<span style="color: #000000">        Add Async</span>
+<span style="color: #000000">      </span><span style="color: #800000">&lt;/button&gt;</span>
+<span style="color: #000000">    </span><span style="color: #800000">&lt;/div&gt;</span>
+<span style="color: #000000">  );</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>If you&#39;re curious about the pattern being used for the selector here to pass arguments, feel free to
+				read the <a href="https://github.com/reduxjs/reselect#q-how-do-i-create-a-selector-that-takes-an-argument">reselect documentation</a> for an in-depth answer to this question.</p>
+				<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
+					<h2>Demo</h2>
+				</a>
+				<p>If you&#39;d like to see redux-feature-data in action, feel free to use <a href="https://codesandbox.io/s/magical-wave-5itof">this codesandbox.io link</a> to try it out without having to write any code.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="modules/featuresagas.html">feature<wbr>Sagas</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="modules/featureselectors.html">feature<wbr>Selectors</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#featuredataactions" class="tsd-kind-icon">feature<wbr>Data<wbr>Actions</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#createfeaturedatareducer" class="tsd-kind-icon">create<wbr>Feature<wbr>Data<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#featuresagasroot" class="tsd-kind-icon">feature<wbr>Sagas<wbr>Root</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

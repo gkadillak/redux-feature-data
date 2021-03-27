@@ -12,6 +12,9 @@ interface GenericState {
   [key: string]: any;
 }
 
+/**
+ * @ignore
+ */
 const getFeatureSlices = (state: GenericState): FeatureSlices<FeatureSlice> =>
   state.featureData;
 

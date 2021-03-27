@@ -25,7 +25,8 @@
     "build": "rollup --config rollup.config.js",
     "start": "yarn build --watch",
     "commit": "cz",
-    "release": "yarn build && yarn standard-version"
+    "release": "yarn build && yarn build:docs && yarn standard-version",
+    "build:docs": "yarn typedoc"
   },
   "author": "Garrett Kadillak",
   "license": "ISC",
@@ -51,6 +52,7 @@
     "redux-saga-test-plan": "^4.0.1",
     "rollup": "^2.42.4",
     "standard-version": "^9.1.1",
+    "typedoc": "^0.20.34",
     "typescript": "^4.2.3"
   },
   "config": {
