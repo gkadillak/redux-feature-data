@@ -13,6 +13,7 @@ const {
   onFetchData,
   onFetchDataSuccess,
   onFetchDataError,
+  onCreateEntity,
   onCreateEntitySuccess,
   onCreateEntityError,
   onUpdateMetaData,
@@ -73,4 +74,5 @@ export function* handleCreateSaga(action: FetchPayload) {
 
 export default function* featureSagasRoot() {
   yield takeLatest(onFetchData.toString(), handleFetchSaga);
+  yield takeLatest(onCreateEntity.toString(), handleCreateSaga);
 }
