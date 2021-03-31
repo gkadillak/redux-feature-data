@@ -1,3 +1,4 @@
+import { put } from "redux-saga/effects";
 import { expectSaga } from "redux-saga-test-plan";
 import { schema } from "normalizr";
 import { genericSagaHandler } from "./featureSagas";
@@ -119,6 +120,40 @@ describe("featureSagas", () => {
       // @ts-expect-error
       return expectSaga(genericSagaHandler, action)
         .put(onUpdateMetaData({ name: "fetch", metaData }))
+        .run();
+    });
+
+    it("should allow a promise to be included in the format callback", () => {
+      const successAction = {
+        type: "success",
+        payload: {
+          name: "fetch",
+          callback: async () => ({
+            data: {
+              users: [{ name: "Garrett" }, { name: "Laura" }],
+            },
+          }),
+          format: function* formatData(data: any) {
+            yield put({ type: "some_random_action" });
+            const formattedUsers = data.users.map(
+              (item: any, index: number) => ({
+                id: index + 1,
+                ...item,
+              })
+            );
+            return { users: formattedUsers };
+          },
+          entity: "users",
+        },
+      };
+      const onSuccessAction = (payload: any) => ({ type: "success", payload });
+      const onErrorAction = () => {};
+      const action = { action: successAction, onSuccessAction, onErrorAction };
+      // @ts-expect-error
+      return expectSaga(genericSagaHandler, action)
+        .put({
+          type: "some_random_action",
+        })
         .run();
     });
   });
