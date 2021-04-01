@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { merge as deepmerge } from "merge-anything";
+import { mergeAndConcat as deepmerge } from "merge-anything";
 import { schema } from "normalizr";
 
 /** @internal */
