@@ -24,8 +24,15 @@ interface FetchPayload {
   payload: GenericPayload;
 }
 
-interface GenericSagaHandler {
-  action: FetchPayload;
+interface SagaParams {
+  callback: () => any;
+  name: string;
+  entity: string;
+  format?: (data: any) => { [key: string]: any[] } | Generator;
+  meta?: (metaData: any) => any;
+}
+
+interface GenericSagaHandler extends SagaParams {
   onSuccessAction: (params: FeatureSuccessPayload) => Action<any>;
   onErrorAction: (params: FeatureErrorPayload) => Action<any>;
 }
@@ -34,11 +41,14 @@ interface GenericSagaHandler {
  * @ignore
  */
 export function* genericSagaHandler({
-  action,
+  callback,
+  name,
+  entity,
+  format,
+  meta,
   onSuccessAction,
   onErrorAction,
 }: GenericSagaHandler) {
-  const { callback, name, entity, format, meta } = action.payload;
   try {
     const { data } = yield callback();
     let formattedData: { [key: string]: any[] };
@@ -61,23 +71,65 @@ export function* genericSagaHandler({
   }
 }
 
-export function* handleFetchSaga(action: FetchPayload) {
+export function* fetchData({
+  callback,
+  name,
+  entity,
+  format,
+  meta,
+}: SagaParams) {
   yield genericSagaHandler({
-    action,
+    callback,
+    name,
+    entity,
+    format,
+    meta,
     onSuccessAction: onFetchDataSuccess,
     onErrorAction: onFetchDataError,
   });
 }
 
-export function* handleCreateSaga(action: FetchPayload) {
+function* handleFetch(action: FetchPayload) {
+  const { callback, name, entity, format, meta } = action.payload;
+  yield fetchData({
+    callback,
+    name,
+    entity,
+    format,
+    meta,
+  });
+}
+
+export function* createEntity({
+  callback,
+  name,
+  entity,
+  format,
+  meta,
+}: SagaParams) {
   yield genericSagaHandler({
-    action,
+    callback,
+    name,
+    entity,
+    format,
+    meta,
     onSuccessAction: onCreateEntitySuccess,
     onErrorAction: onCreateEntityError,
   });
 }
 
+function* handleCreate(action: FetchPayload) {
+  const { callback, name, entity, format, meta } = action.payload;
+  yield createEntity({
+    callback,
+    name,
+    entity,
+    format,
+    meta,
+  });
+}
+
 export default function* featureSagasRoot() {
-  yield takeLatest(onFetchData.toString(), handleFetchSaga);
-  yield takeLatest(onCreateEntity.toString(), handleCreateSaga);
+  yield takeLatest(onFetchData.toString(), handleFetch);
+  yield takeLatest(onCreateEntity.toString(), handleCreate);
 }

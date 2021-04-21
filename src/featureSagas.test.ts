@@ -16,26 +16,25 @@ describe("featureSagas", () => {
 
   describe("genericSagaHandler", () => {
     it("should normalize data on success", () => {
-      const successAction = {
-        type: "success",
-        payload: {
-          name: "fetch",
-          callback: async () => ({
-            data: {
-              users: [
-                { id: 1, name: "Garrett" },
-                { id: 2, name: "Laura" },
-              ],
-            },
-          }),
-          entity: "users",
+      const name = "fetch";
+      const callback = async () => ({
+        data: {
+          users: [
+            { id: 1, name: "Garrett" },
+            { id: 2, name: "Laura" },
+          ],
         },
-      };
+      });
+      const entity = "users";
       const onSuccessAction = (payload: any) => ({ type: "success", payload });
-      const onErrorAction = () => {};
-      const action = { action: successAction, onSuccessAction, onErrorAction };
-      // @ts-expect-error
-      return expectSaga(genericSagaHandler, action)
+      const onErrorAction = (payload: any) => ({ type: "error", payload });
+      return expectSaga(genericSagaHandler, {
+        callback,
+        name,
+        entity,
+        onSuccessAction: onSuccessAction,
+        onErrorAction,
+      })
         .put({
           type: "success",
           payload: {
@@ -52,32 +51,30 @@ describe("featureSagas", () => {
         .run();
     });
     it("should format data when supplied parameter", () => {
-      const successAction = {
-        type: "success",
-        payload: {
-          name: "fetch",
-          callback: async () => ({
-            data: {
-              users: [{ name: "Garrett" }, { name: "Laura" }],
-            },
-          }),
-          format(data: any) {
-            const formattedUsers = data.users.map(
-              (item: any, index: number) => ({
-                id: index + 1,
-                ...item,
-              })
-            );
-            return { users: formattedUsers };
-          },
-          entity: "users",
+      const name = "fetch";
+      const callback = async () => ({
+        data: {
+          users: [{ name: "Garrett" }, { name: "Laura" }],
         },
-      };
+      });
+      function format(data: any) {
+        const formattedUsers = data.users.map((item: any, index: number) => ({
+          id: index + 1,
+          ...item,
+        }));
+        return { users: formattedUsers };
+      }
+      const entity = "users";
       const onSuccessAction = (payload: any) => ({ type: "success", payload });
-      const onErrorAction = () => {};
-      const action = { action: successAction, onSuccessAction, onErrorAction };
-      // @ts-expect-error
-      return expectSaga(genericSagaHandler, action)
+      const onErrorAction = (payload: any) => ({ type: "error", payload });
+      return expectSaga(genericSagaHandler, {
+        callback,
+        name,
+        format,
+        entity,
+        onSuccessAction,
+        onErrorAction,
+      })
         .put({
           type: "success",
           payload: {
@@ -98,59 +95,57 @@ describe("featureSagas", () => {
         page: 1,
         totalPages: 159,
       };
-      const successAction = {
-        type: "success",
-        payload: {
-          name: "fetch",
-          callback: async () => ({
-            data: {
-              users: [{ name: "Garrett" }, { name: "Laura" }],
-              meta: metaData,
-            },
-          }),
-          meta(data: any) {
-            return data.meta;
-          },
-          entity: "users",
+      const name = "fetch";
+      const callback = async () => ({
+        data: {
+          users: [{ name: "Garrett" }, { name: "Laura" }],
+          meta: metaData,
         },
-      };
+      });
+      function meta(data: any) {
+        return data.meta;
+      }
+      const entity = "users";
       const onSuccessAction = (payload: any) => ({ type: "success", payload });
-      const onErrorAction = () => {};
-      const action = { action: successAction, onSuccessAction, onErrorAction };
-      // @ts-expect-error
-      return expectSaga(genericSagaHandler, action)
+      const onErrorAction = (payload: any) => ({ type: "error", payload });
+      return expectSaga(genericSagaHandler, {
+        callback,
+        name,
+        meta,
+        entity,
+        onSuccessAction,
+        onErrorAction,
+      })
         .put(onUpdateMetaData({ name: "fetch", metaData }))
         .run();
     });
 
     it("should allow a promise to be included in the format callback", () => {
-      const successAction = {
-        type: "success",
-        payload: {
-          name: "fetch",
-          callback: async () => ({
-            data: {
-              users: [{ name: "Garrett" }, { name: "Laura" }],
-            },
-          }),
-          format: function* formatData(data: any) {
-            yield put({ type: "some_random_action" });
-            const formattedUsers = data.users.map(
-              (item: any, index: number) => ({
-                id: index + 1,
-                ...item,
-              })
-            );
-            return { users: formattedUsers };
-          },
-          entity: "users",
+      const name = "fetch";
+      const callback = async () => ({
+        data: {
+          users: [{ name: "Garrett" }, { name: "Laura" }],
         },
+      });
+      const format = function* formatData(data: any) {
+        yield put({ type: "some_random_action" });
+        const formattedUsers = data.users.map((item: any, index: number) => ({
+          id: index + 1,
+          ...item,
+        }));
+        return { users: formattedUsers };
       };
+      const entity = "users";
       const onSuccessAction = (payload: any) => ({ type: "success", payload });
-      const onErrorAction = () => {};
-      const action = { action: successAction, onSuccessAction, onErrorAction };
-      // @ts-expect-error
-      return expectSaga(genericSagaHandler, action)
+      const onErrorAction = (payload: any) => ({ type: "error", payload });
+      return expectSaga(genericSagaHandler, {
+        name,
+        callback,
+        format,
+        entity,
+        onSuccessAction,
+        onErrorAction,
+      })
         .put({
           type: "some_random_action",
         })
