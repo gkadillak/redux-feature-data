@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/gkadillak/redux-feature-data/compare/v2.0.4...v3.0.0) (2021-04-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* **featuresagas.ts:** Named params are now required for the public sagas
+
+### Features
+
+* **featuresagas.ts:** expose public sagas to be used with named params rather than actions ([f84525c](https://github.com/gkadillak/redux-feature-data/commit/f84525cc712e387f4cd517379c5067ab0f9c73a7))
+
 ### [2.0.4](https://github.com/gkadillak/redux-feature-data/compare/v2.0.2...v2.0.4) (2021-04-01)
 
 
