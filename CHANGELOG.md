@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/gkadillak/redux-feature-data/compare/v3.0.0...v3.0.1) (2021-05-03)
+
+
+### Bug Fixes
+
+* **featureslice.ts:** merge fetched data ([acd5f76](https://github.com/gkadillak/redux-feature-data/commit/acd5f763ac2045e4608ae5ad6da7157cd470213c))
+
 ## [3.0.0](https://github.com/gkadillak/redux-feature-data/compare/v2.0.4...v3.0.0) (2021-04-21)
 
 
