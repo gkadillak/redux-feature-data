@@ -91,7 +91,7 @@ export const { reducer, actions } = createSlice({
         action.payload.entities
       );
       state[action.payload.name].status = ResourceStatus.HAS_FETCHED_SUCCESS;
-      state[action.payload.name].data = action.payload.data;
+      state[action.payload.name].data = deepmerge(state[action.payload.name].data || {}, action.payload.data);
     },
     onFetchDataError(state, action: PayloadAction<FeatureErrorPayload>) {
       state[action.payload.name].status = ResourceStatus.HAS_FETCHED_ERROR;

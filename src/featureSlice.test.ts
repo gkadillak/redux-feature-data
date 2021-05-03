@@ -55,5 +55,60 @@ describe("featureSlice", () => {
         });
       });
     });
+    describe("onFetchDataSuccess", () => {
+      it("should merge objects and concat arrays", () => {
+        const initialState = {
+          app: {
+            data: {
+              posts: [1, 2],
+              comments: [1, 2, 3],
+            },
+          },
+          entities: {
+            posts: {
+              1: { id: 1 },
+              2: { id: 2 },
+            },
+            comments: {
+              1: { id: 1, body: "Hey there" },
+              2: { id: 2, body: "Hiya" },
+              3: { id: 3, body: "What?" },
+            },
+          },
+        };
+        const action = {
+          name: "app",
+          data: { posts: [5] },
+          entities: {
+            posts: { 5: { id: 5 } },
+          },
+        };
+        const output = reducer(
+          initialState,
+          actions.onFetchDataSuccess(action)
+        );
+        expect(output).toEqual({
+          app: {
+            status: ResourceStatus.HAS_FETCHED_SUCCESS,
+            data: {
+              posts: [1, 2, 5],
+              comments: [1, 2, 3],
+            },
+          },
+          entities: {
+            posts: {
+              1: { id: 1 },
+              2: { id: 2 },
+              5: { id: 5 },
+            },
+            comments: {
+              1: { id: 1, body: "Hey there" },
+              2: { id: 2, body: "Hiya" },
+              3: { id: 3, body: "What?" },
+            },
+          },
+        });
+      });
+    });
   });
 });
