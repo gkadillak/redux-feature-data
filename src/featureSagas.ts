@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { put, takeLatest } from "redux-saga/effects";
+import { put, takeEvery, takeLatest } from "redux-saga/effects";
 import { normalize } from "normalizr";
 import {
   actions,
@@ -90,6 +90,7 @@ export function* fetchData({
 }
 
 function* handleFetch(action: FetchPayload) {
+  console.log("in redux feature sagas");
   const { callback, name, entity, format, meta } = action.payload;
   yield fetchData({
     callback,
@@ -130,6 +131,6 @@ function* handleCreate(action: FetchPayload) {
 }
 
 export default function* featureSagasRoot() {
-  yield takeLatest(onFetchData.toString(), handleFetch);
-  yield takeLatest(onCreateEntity.toString(), handleCreate);
+  yield takeEvery(onFetchData.toString(), handleFetch);
+  yield takeEvery(onCreateEntity.toString(), handleCreate);
 }
