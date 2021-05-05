@@ -134,3 +134,9 @@ If you'd like to see redux-feature-data in action, feel free to use [this codesa
 ## API
 
 [Link to api docs](https://gkadillak.github.io/redux-feature-data/)
+
+## Contributing
+
+To contribute, please fork this repository and then make sure to use `yarn commit` to create commits.
+
+To test your code locally in another project, you can run `yarn link` in this repo, and then `yarn link redux-feature-data` in the project where you have run `yarn install redux-feature-data`.
