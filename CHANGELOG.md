@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/gkadillak/redux-feature-data/compare/v3.0.1...v3.0.2) (2021-05-05)
+
+
+### Bug Fixes
+
+* **sagas:** don't cancel previous actions ([7094e5f](https://github.com/gkadillak/redux-feature-data/commit/7094e5fdc19875a5d54d3f2c090b952c4d8af37a))
+
 ### [3.0.1](https://github.com/gkadillak/redux-feature-data/compare/v3.0.0...v3.0.1) (2021-05-03)
 
 
