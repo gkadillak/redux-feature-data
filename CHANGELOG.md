@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/gkadillak/redux-feature-data/compare/v3.0.2...v3.1.0) (2021-05-06)
+
+
+### Features
+
+* **add selector:** selector to check if a feature is fetching data ([855a1e3](https://github.com/gkadillak/redux-feature-data/commit/855a1e3c053602e8f61765094cb1fb954ba3c3c3))
+
 ### [3.0.2](https://github.com/gkadillak/redux-feature-data/compare/v3.0.1...v3.0.2) (2021-05-05)
 
 
