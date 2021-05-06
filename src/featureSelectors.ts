@@ -25,6 +25,14 @@ export const makeGetFeatureStatus = ({ name }: { name: string }) => {
   );
 };
 
+export const makeGetIsFeatureFetching = ({ name }: { name: string }) => {
+  const getFeatureStatus = makeGetFeatureStatus({ name });
+  return createSelector(
+    getFeatureStatus,
+    (status: ResourceStatus) => status && status === ResourceStatus.IS_FETCHING
+  );
+};
+
 export const makeGetHasFeatureFetchedSuccess = ({ name }: { name: string }) => {
   const getFeatureStatus = makeGetFeatureStatus({ name });
   return createSelector(

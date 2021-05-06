@@ -90,7 +90,6 @@ export function* fetchData({
 }
 
 function* handleFetch(action: FetchPayload) {
-  console.log("in redux feature sagas");
   const { callback, name, entity, format, meta } = action.payload;
   yield fetchData({
     callback,
