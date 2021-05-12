@@ -51,6 +51,14 @@ export const makeGetHasFeatureFetchedError = ({ name }: { name: string }) => {
   );
 };
 
+export const makeGetIsEntityCreating = ({ name }: { name: string }) => {
+  const getFeatureStatus = makeGetFeatureStatus({ name });
+  return createSelector(
+    getFeatureStatus,
+    (status: ResourceStatus) => status && status === ResourceStatus.IS_CREATING
+  );
+};
+
 export const makeGetHasEntityCreatedSuccess = ({ name }: { name: string }) => {
   const getFeatureStatus = makeGetFeatureStatus({ name });
   return createSelector(
