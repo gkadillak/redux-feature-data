@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/gkadillak/redux-feature-data/compare/v3.1.0...v3.2.0) (2021-05-12)
+
+
+### Features
+
+* **new selector:** selector to check if entity is creating ([604e4b1](https://github.com/gkadillak/redux-feature-data/commit/604e4b145f2280f78f237ead66a3f347b4a59570))
+
 ## [3.1.0](https://github.com/gkadillak/redux-feature-data/compare/v3.0.2...v3.1.0) (2021-05-06)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "redux-feature-data",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Generic actions, selectors and sagas for react projects using redux, redux-sagas, and normalizr",
   "issues": "https://github.com/gkadillak/redux-feature-data/issues",
   "main": "dist/index.js",
