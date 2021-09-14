@@ -25,6 +25,13 @@ export const makeGetFeatureStatus = ({ name }: { name: string }) => {
   );
 };
 
+export const makeGetFeatureData = ({ name }: { name: string }) => {
+  return createSelector(
+    getFeatureSlices,
+    (slices: FeatureSlices<FeatureSlice>) => slices[name]?.data
+  );
+};
+
 export const makeGetIsFeatureFetching = ({ name }: { name: string }) => {
   const getFeatureStatus = makeGetFeatureStatus({ name });
   return createSelector(
@@ -84,13 +91,16 @@ export const makeGetDenormalizedData = ({
   name: string;
   entity: string;
 }) => {
-  const getHasFeatureFetchedSuccess = makeGetHasFeatureFetchedSuccess({ name });
+  const getFeatureStatus = makeGetFeatureStatus({ name });
+  const getFeatureData = makeGetFeatureData({ name });
+
   return createSelector(
     getFeatureSlices,
-    getHasFeatureFetchedSuccess,
-    (slices: FeatureSlices<FeatureSlice>, hasFetchedSuccessfully: boolean) => {
-      if (!hasFetchedSuccessfully || !slices.entities) {
-        return {};
+    getFeatureStatus,
+    getFeatureData,
+    (slices: FeatureSlices<FeatureSlice>, status: string, featureData) => {
+      if (!status || !featureData || !slices.entities) {
+        return undefined;
       }
 
       const { data } = slices[name];
