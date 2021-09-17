@@ -67,7 +67,13 @@ export function* genericSagaHandler({
       yield put(onUpdateMetaData({ name, metaData }));
     }
   } catch (error) {
-    yield put(onErrorAction({ name, error }));
+    if (error instanceof Error) {
+      yield put(onErrorAction({ name, error }));
+    } else if (typeof error === "string") {
+      yield put(onErrorAction({ name, error: new Error(error) }));
+    } else {
+      yield put(onErrorAction({ name, error: new Error('Unexpected error attempting to normalize data') }));
+    }
   }
 }
 
