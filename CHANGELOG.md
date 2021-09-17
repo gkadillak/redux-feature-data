@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/gkadillak/redux-feature-data/compare/v3.2.0...v3.2.1) (2021-09-17)
+
+
+### Bug Fixes
+
+* **featuresagas.ts:** make error stored predictable ([#8](https://github.com/gkadillak/redux-feature-data/issues/8)) ([977ba4f](https://github.com/gkadillak/redux-feature-data/commit/977ba4fce9867f7ebb5c999ea9c150b081c9ade2))
+* **featureslice.ts:** fix error type to match expected type in catch ([0b07e1f](https://github.com/gkadillak/redux-feature-data/commit/0b07e1f14886365231a9915bdbaa663adb55bfb6))
+
 ## [3.2.0](https://github.com/gkadillak/redux-feature-data/compare/v3.1.0...v3.2.0) (2021-05-12)
 
 
