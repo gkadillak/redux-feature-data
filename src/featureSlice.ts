@@ -47,7 +47,7 @@ export interface FeatureSuccessPayload extends FeaturePayload {
 }
 
 export interface FeatureErrorPayload extends FeaturePayload {
-  error: Error;
+  error: unknown;
 }
 
 export interface FeatureSlice {
